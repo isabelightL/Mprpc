@@ -1,3 +1,42 @@
+RPC分布式网络通信框架 (MPRPC)
+====
+Introduction
+-------
+该项目网络层基于高并发的Reactor网络模型muduo开源网络库实现，可以比较好的对网络IO层和RPC方法调用处理层进行代码解耦。RPC方法调用通过protobuf进行相关数据的序列化和反序列化，在同构和异构系统中都可以直接进行调用。基于zookeeper实现微服务的服务注册、服务发现。
+
+Envoirment
+-------
+* OS: Ubuntuserver 18.04
+* Complier: gcc 7.5
+* Zookeeper 3.4.10
+* Protobuf 3.11.0
+* Cmake 3.10.2 
+
+Build
+-------
+```
+./autobuild.sh
+```
+
+Technical points
+-------
+* 集群和分布式概念以及原理
+* RPC远程过程调用原理以及实现
+* Protobuf数据序列化和反序列化协议
+* ZooKeeper分布式一致性协调服务应用以及编程
+* Muduo网络库编程
+* 异步日志系统
+* CMake项目集成编译环境
+
+Project Interaction Diagram
+-------
+![](project.png)
+
+
+
+
+
+
 
 ```
 mprpc
