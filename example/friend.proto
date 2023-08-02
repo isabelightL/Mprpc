@@ -1,0 +1,31 @@
+syntax = "proto3";// 声明了protobuf的版本
+package fixbug; // 声明了代码所在的包（对于C++来说是namespace）
+
+
+
+//定义下面的选项，表示生成service服务类和rpc方法描述，默认不生成
+option cc_generic_services=true;
+
+message ResultCode//错误码和错误信息封装起来，因为可能涉及重复利用
+{
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
+
+message GetFriendListRequest
+{
+   uint32 userid =1;
+}
+
+message GetFriendListResponse
+{
+    ResultCode result=1;
+    repeated bytes friends=2; // 很多friends,是人名的列表
+}
+
+
+//--------------------在protobuf里面怎么定义描述rpc方法的类型 --好友模块
+service FriendServiceRpc{
+    rpc GetFriendList(GetFriendListRequest) returns(GetFriendListResponse);
+}

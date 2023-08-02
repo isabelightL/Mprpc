@@ -1,0 +1,60 @@
+syntax = "proto3";// 声明了protobuf的版本
+package fixbug; // 声明了代码所在的包（对于C++来说是namespace）
+
+
+
+//定义下面的选项，表示生成service服务类和rpc方法描述，默认不生成
+option cc_generic_services=true;
+
+//protobuf 只需要解析三类数据，单个数据，列表，映射表，这里只涉及列表
+
+message ResultCode//错误码和错误信息封装起来，因为可能涉及重复利用
+{
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
+//----------------------第一节看解析单个数据----------------------------------------
+// 定义登录请求消息类型  name   pwd
+message LoginRequest
+{
+    bytes name = 1;//这里的1不是初始化，而是指 LoginRequest的第一个字段
+    bytes pwd = 2;//pwd 是第二个字段
+}
+
+// 定义登录响应消息类型
+message LoginResponse
+{
+    ResultCode result=1;
+    bool sucess=2;//真正的返回结果，第三个字段
+}
+//----------------------第二节看解析列表--------------------------------------
+message User //想要返回用户好友列表，每个都是User类型
+{
+    bytes name = 1;
+    uint32 age = 2;
+    enum Sex//枚举，从0开始
+    {
+        MAN = 0;
+        WOMAN = 1;
+    }
+    Sex sex = 3;
+}
+
+message GetFriendListsRequest
+{
+    uint32 userid = 1;
+}
+
+message GetFriendListsResponse//返回的朋友有多个，组成列表
+{
+    ResultCode result = 1;
+    repeated User friend_list = 2;  // 定义了一个列表类型。Repeat是重复的意思，就意思是把这个字段重复，这个字段重复的话，意味着这个生成的这个类里边有一个user这样的一个列表，我们把它叫做，Friend list，这就是列表类型了，定义了一个存储用户的列表类型
+}
+
+//--------------------在protobuf里面怎么定义描述rpc方法的类型 --service
+service UserServiceRpc{
+    rpc Login(LoginRequest) returns(LoginResponse);
+    rpc GetFriendLists(GetFriendListsRequest) returns(GetFriendListsResponse);
+
+}

@@ -1,0 +1,4 @@
+9:49:15 =>[error] first log message!
+9:49:15 =>[error] /home/by/mprpc/example/callee/friendservice.cc:main:56
+11:36:31 =>[error] first log message!
+11:36:31 =>[error] /home/by/mprpc/example/callee/friendservice.cc:main:56
